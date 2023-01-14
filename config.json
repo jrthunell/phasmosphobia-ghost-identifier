@@ -1,0 +1,85 @@
+{
+	"ghostTypes": [
+		"Spirit",
+		"Phantom",
+	],
+	"gameSettings": {
+		"piecesOfEvidence": 3
+	}
+	"evidence": {
+		"Ghost Events": [
+			{
+				"name": "Smoke Ball",
+				"type": "counter",
+				"probabilities": {
+					"Oni": 0,
+					"Shade": 60
+				}
+			},
+			{
+				"name": "Full Manifestation, no singing",
+				"type": "counter",
+				"probabilities": {
+					"Shade": 40
+				}
+			},
+			{
+				"name": "Singing",
+				"type": "counter",
+				"probabilities": {
+					"Banshee": 60
+				}
+			},
+			{
+				"name": "Light Shattering",
+				"type": "counter",
+				"probabilities": {
+					"Mare": 60
+				}
+			},
+			{
+				"name": "Event Frequency decreases over time",
+				"type": "boolean",
+				"trueProbabilities": {
+					"Thaye": 60
+				},
+				"falseProbabilities": {
+					"Thaye": 40
+				}
+			}
+		],
+		"Interactions": [
+			{
+				"name": "Interactions with player in the room",
+				"type": "counter",
+				"trueProbabilities": {
+					"Shade": 30
+				}
+			}
+		]
+		"Salt": [
+			{
+				"name": "Steps in Salt",
+				"type": "boolean",
+				"trueProbabilities": {
+					"Wraith": 0
+				},
+				"falseProbabilities": {
+					"Wraith": 90
+				}
+			}
+		],
+		"Photos": [
+			{
+				"name": "Ghost appears in photos",
+				"type": "boolean",
+				"trueProbabilities": {
+					"Phantom": 0
+				},
+				"falseProbabilities": {
+					"Phantom": 90
+				}
+			}
+		]
+	}
+}
