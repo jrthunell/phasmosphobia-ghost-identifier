@@ -123,6 +123,9 @@ function sortObjectByValues(obj) {
         return [key, obj[key]];
     });
     items.sort(function(first, second) {
+		if(first[1] == second[1]){
+			return first[0].localeCompare(second[0])
+		}
         return second[1] - first[1];
     });
     sorted_obj={}
