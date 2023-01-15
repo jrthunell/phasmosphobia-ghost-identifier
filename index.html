@@ -28,8 +28,8 @@
 			</div>
 		</div>
 		<div class="row">
-			<div id="evidence-list" class="col-sm-8">			
-				<div class="card text-white bg-secondary mb-3 ">
+			<div class="col-sm-8">			
+				<div id="evidence-list" class="card text-white bg-secondary mb-3 ">
 					<div class="card-header">Standard Evidence</div>
 					<div class="card-body" id="settings-template">
 						<div class="card-text" id="standard-evidence-template">
@@ -49,8 +49,36 @@
 							</div>
 						</div>
 					</div>
+				</div>	
+				<div id="other-evidence-cards"></div>
+				<div style="visibility: hidden" id="templates">
+					<div id="evidence-card-template">
+						<div class="card text-white bg-secondary mb-3 ">
+							<div class="card-header">$group</div>
+							<div class="card-body" id="$group-body">
+								<div class="card-text" id="">$body</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-text" id="boolean-evidence-template">
+						<div class="row">
+							<div class="btn-group btn-group-toggle border border-light rounded" data-toggle="buttons">
+								<label class="btn btn-secondary btn-sm" id="$group-$name-button-yes" >
+									<input type="radio" name="options" autocomplete="off" onclick="setBooleanEvidence('yes',$callbackFnArgs)">Yes</input>
+								</label>
+								<label class="btn btn-secondary btn-sm" id="$group-$name-button-maybe" >
+									<input type="radio" name="options" autocomplete="off" onclick="setBooleanEvidence('maybe',$callbackFnArgs)">Maybe</input>
+								</label>
+								<label class="btn btn-secondary btn-sm" id="$group-$name-button-no"> 
+									<input type="radio" name="options" autocomplete="off" onclick="setBooleanEvidence('no',$callbackFnArgs)">No</input>
+								</label>
+							</div>
+							<p style="margin:5px 0 0 10px">$name</p>
+						</div>
+					</div>
 				</div>
 			</div>
+			
 			<div id="ghost-list" class="col-sm-4">
 				<table class="table table-hover">
 					<thead class="table-primary">

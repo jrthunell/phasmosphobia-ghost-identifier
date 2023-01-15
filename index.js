@@ -26,9 +26,11 @@ $( document ).ready(async function() {
 		game.standardEvidence[evidence] = "maybe";
 	}
 	
+	loadOtherEvidence();
 	
 	refreshGameSettings(game.gameSettings);
 	refreshStandardEvidence(game.standardEvidence);
+	refreshOtherEvidence();
 	refreshPage();
 });
 
@@ -134,7 +136,60 @@ function calculateGhostProbabilities(){
 		}
 	}
 	
+	calculateOtherEvidenceGhostProbabilities();
+	
 	game.ghosts = sortObjectByValues(game.ghosts);
+}
+
+function calculateOtherEvidenceGhostProbabilities(){
+	for(group in game.otherEvidence){
+		for(name in game.otherEvidence[group]){
+			var evidence = game.otherEvidence[group][name];
+			switch(evidence.type){
+				case "boolean":
+					calculateBooleanEvidenceProbabilities(group, name);
+					break;
+				case "counter":
+					calculateCounterEvidenceProbabilities(group, name);
+					break;
+			}
+		}
+	}
+}
+
+function calculateBooleanEvidenceProbabilities(group, name){
+	var evidenceConfig = config.otherEvidence[group].filter(x => x.name == name)[0]
+	var gameEvidence = game.otherEvidence[group][name];
+	
+	var totalGhostProbabilityScores = Object.values(game.ghosts).reduce((acc, x)=>acc+x, 0);
+	
+	if(gameEvidence.state == "yes"){
+		for(ghost in evidenceConfig.trueProbabilities){
+			if(ghost == "others")
+				continue;
+			// if there is a probability defined for this ghost, update accordingly
+			game.ghosts[ghost] = (evidenceConfig.trueProbabilities[ghost] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
+		}
+		for(ghost in game.ghosts){
+			// use the "others" field for all other ghosts
+			game.ghosts[ghost] = (evidenceConfig.trueProbabilities["others"] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
+		}
+	} else if (gameEvidence.state == "no"){
+		for(ghost in evidenceConfig.falseProbabilities){
+			if(ghost == "others")
+				continue;
+			// if there is a probability defined for this ghost, update accordingly
+			game.ghosts[ghost] = (evidenceConfig.falseProbabilities[ghost] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
+		}
+		for(ghost in game.ghosts){
+			// use the "others" field for all other ghosts
+			game.ghosts[ghost] = (evidenceConfig.falseProbabilities["others"] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
+		}
+	}
+}
+
+function calculateCounterEvidenceProbabilities(group, name){
+	alert("not implemented");
 }
 
 function sortObjectByValues(obj) {
@@ -160,4 +215,105 @@ function setStandardEvidence(evidence, value){
 	game.standardEvidence[evidence] = value;
 	refreshStandardEvidence(game.standardEvidence);
 	refreshPage();
+}
+
+function loadOtherEvidence(){
+	game.otherEvidence = {};
+	for(group in config.otherEvidence){
+		game.otherEvidence[group] = {};
+		for(evidence of config.otherEvidence[group]){
+			switch(evidence.type){
+				case "boolean":
+					game.otherEvidence[group][evidence.name] = {
+						name: evidence.name,
+						type: evidence.type,
+						state: "maybe"
+					};
+					break;
+				case "counter":
+					//game.otherEvidence[group][evidence.name] = {
+					//	name: evidence.name,
+					//	type: evidence.type,
+					//	count: 0
+					//};
+					break;
+				default:
+					console.log("unrecognized evidence type: " + evidence.type);
+			}
+		}
+	}
+}
+
+function refreshOtherEvidence(){
+	var evidenceCardsWrapper = document.getElementById("other-evidence-cards");
+	evidenceCardsWrapper.innerHTML = "";
+	var evidenceCardsHTML = "";
+	for(group in game.otherEvidence){
+		evidenceCardsHTML += createEvidenceGroupHTML(group);
+	}
+	evidenceCardsWrapper.innerHTML = evidenceCardsHTML;
+	
+	refreshBooleanEvidenceHTML();
+}
+
+function createEvidenceGroupHTML(group){
+	var template = document.getElementById("evidence-card-template").innerHTML;
+	var bodyHTML = "";
+	for(evidence of Object.values(game.otherEvidence[group])){
+		switch(evidence.type){
+			case "boolean":
+				bodyHTML += createBooleanEvidenceHTML(group, evidence);
+				break;
+			case "counter":
+				bodyHTML += createCounterEvidenceHTML(group, evidence);
+				break;
+			default:
+				console.log("unrecognized evidence type: " + evidence.type);
+		}
+	}
+	return template.replaceAll("$group", group).replaceAll("$body", bodyHTML);
+}
+
+function createBooleanEvidenceHTML(group, evidence){
+	var template = document.getElementById("boolean-evidence-template").innerHTML;
+	
+	return template
+		.replaceAll("$group", group)
+		.replaceAll("$name", evidence.name)
+		.replaceAll("$callbackFnArgs", "'" + group + "','" + evidence.name + "'");
+}
+
+function refreshBooleanEvidenceHTML(){
+	for(group in game.otherEvidence){
+		for(name in game.otherEvidence[group]){
+			var evidence = game.otherEvidence[group][name];
+			var yesElem = document.getElementById(group + "-" + evidence.name + "-button-yes");
+			if(yesElem && game.otherEvidence[group][name].state == "yes"){
+				yesElem.checked = true;
+				yesElem.className = "btn btn-success btn-sm active";
+			}
+			
+			var maybeElem = document.getElementById(group + "-" + evidence.name + "-button-maybe");
+			if(maybeElem && game.otherEvidence[group][name].state == "maybe"){
+				maybeElem.checked = true;
+				maybeElem.className = "btn btn-warning btn-sm active";
+			}
+			
+			var noElem = document.getElementById(group + "-" + evidence.name + "-button-no");
+			if(noElem && game.otherEvidence[group][name].state == "no"){
+				noElem.checked = true;
+				noElem.className = "btn btn-danger btn-sm active";
+			}
+		}
+	}
+}
+
+function setBooleanEvidence(state, group, name){
+	game.otherEvidence[group][name].state = state;
+	refreshOtherEvidence();
+	refreshPage();
+}
+
+function createCounterEvidenceHTML(group, evidence){
+	return evidence.name + "<br>";	
 }
