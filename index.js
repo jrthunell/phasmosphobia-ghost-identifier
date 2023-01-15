@@ -126,13 +126,16 @@ function calculateGhostProbabilities(){
 					game.ghosts[ghost] = 0;
 				}
 			}
-		} else if(game.standardEvidence[standardEvidence] == "no"){
+		} else if(game.standardEvidence[standardEvidence] == "no" && game.gameSettings.piecesOfEvidence == 3){
 			// this evidence was ruled out, remove all ghosts that have it
 			for(ghost in game.ghosts){
 				if(config.ghostTypes[ghost].evidence.includes(standardEvidence)){
 					game.ghosts[ghost] = 0;
 				}
 			}
+		} else if(game.standardEvidence[standardEvidence] == "no" && standardEvidence == "Ghost Orb" && game.gameSettings.piecesOfEvidence == 0){
+			// if ghost orbs were ruled out on a 0-evidence run, it's most likely not the mimic
+			game.ghosts["The Mimic"] /= 10;
 		}
 	}
 	
