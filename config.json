@@ -194,8 +194,8 @@
 				"name": "Full Manifestation, no singing",
 				"type": "counter",
 				"probabilities": {
-					"Shade": 40,
-					"others": 30
+					"Shade": 30,
+					"others": 40
 				}
 			},
 			{
@@ -246,7 +246,7 @@
 					"others": 70
 				},
 				"falseProbabilities": {
-					"Wraith": 90,
+					"Wraith": 100,
 					"others": 30
 				}
 			}
@@ -262,6 +262,34 @@
 				"falseProbabilities": {
 					"Phantom": 90,
 					"others": 30
+				}
+			}
+		],
+		"Spirit Box": [
+			{
+				"name": "Deep bull-like breathing",
+				"type": "boolean",
+				"trueProbabilities": {
+					"Deogen": 90,
+					"others": 30
+				},
+				"falseProbabilities": {
+					"Deogen": 30,
+					"others": 70
+				}
+			}
+		],
+		"Ghost Room": [
+			{
+				"name": "Ghost changes favorite room",
+				"type": "boolean",
+				"trueProbabilities": {
+					"Goryo": 0,
+					"others": 5
+				},
+				"falseProbabilities": {
+					"Goryo": 100,
+					"others": 95
 				}
 			}
 		]
