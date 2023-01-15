@@ -1,8 +1,38 @@
 <html>
 <head>
-<script src="./config.json"></script>
-<script src="./index.js"></script>
+<title>Phasmophobia Ghost Identifier</title>
+<link href="https://bootswatch.com/4/cyborg/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script src="./index.js"></script>    
 </head>
 <body>
-Hello World
+	<div class="container">
+		<h1 class="text-center" style="margin-bottom:70px">Phasmophobia Ghost Identifier</h1>
+		<div class="row">
+			<div id="evidence-list" class="col-sm-8">
+			Evidence goes here
+			</div>
+			<div id="ghost-list" class="col-sm-4">
+				<table class="table table-hover">
+					<thead class="table-primary">
+					<tr>
+						<th>Ghost Name</th>
+						<th>Probability</th>
+					</tr>
+					</thead>
+					<tbody id="ghost-table-body">
+						<tr>
+							<td>Spirit</td>
+							<td>50%</td>
+						</tr>
+						<tr>
+							<td>Phantom</td>
+							<td>50%</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </body>
