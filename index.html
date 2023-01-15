@@ -32,12 +32,20 @@
 				<div class="card text-white bg-secondary mb-3 ">
 					<div class="card-header">Standard Evidence</div>
 					<div class="card-body" id="settings-template">
-						<div class="card-text">
-							<div class="form-group" id="standard-evidence-template">
-								<div class="custom-control custom-switch">
-									<input type="checkbox" class="custom-control-input" id="$name" onchange="$callback">
-									<label class="custom-control-label" id="$name-label" for="$name">$name</label>
+						<div class="card-text" id="standard-evidence-template">
+							<div class="row">
+								<div class="btn-group btn-group-toggle border border-light rounded" data-toggle="buttons">
+									<label class="btn btn-secondary btn-sm" id="$name-button-yes" >
+										<input type="radio" name="options" autocomplete="off" onclick="setStandardEvidence('$name','yes')">Yes</input>
+									</label>
+									<label class="btn btn-secondary btn-sm" id="$name-button-maybe" >
+										<input type="radio" name="options" autocomplete="off" onclick="setStandardEvidence('$name','maybe')">Maybe</input>
+									</label>
+									<label class="btn btn-secondary btn-sm" id="$name-button-no"> 
+										<input type="radio" name="options" autocomplete="off" onclick="setStandardEvidence('$name','no')">No</input>
+									</label>
 								</div>
+								<p style="margin:5px 0 0 10px">$name</p>
 							</div>
 						</div>
 					</div>

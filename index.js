@@ -23,7 +23,7 @@ $( document ).ready(async function() {
 	standardEvidenceElement = document.getElementById("standard-evidence-template");
 	standardEvidenceTemplate = standardEvidenceElement.innerHTML;
 	for(var evidence of config.standardEvidence){
-		game.standardEvidence[evidence] = false;
+		game.standardEvidence[evidence] = "maybe";
 	}
 	
 	
@@ -55,19 +55,31 @@ function refreshStandardEvidence(standardEvidence){
 	for(evidence in standardEvidence){
 		// in 0-evidence runs, the only standard evidence available is ghost orbs (if the ghost is a mimic)
 		if(game.gameSettings.piecesOfEvidence == 0 && evidence != "Ghost Orb"){
-			game.standardEvidence[evidence] = false;
+			game.standardEvidence[evidence] = "maybe";
 			continue;
 		}
 		standardEvidenceHTML += standardEvidenceTemplate
-			.replaceAll("$name", evidence)
-			.replaceAll("$isChecked", standardEvidence[evidence])
-			.replaceAll("$callback", "setStandardEvidence(event)");
+			.replaceAll("$name", evidence);
 	}
 	standardEvidenceElement.innerHTML = standardEvidenceHTML;
 	for(evidence in standardEvidence){
-		var elem = document.getElementById(evidence);
-		if(elem)
-			elem.checked = game.standardEvidence[evidence];
+		var yesElem = document.getElementById(evidence + "-button-yes");
+		if(yesElem && game.standardEvidence[evidence] == "yes"){
+			yesElem.checked = true;
+			yesElem.className = "btn btn-success btn-sm active";
+		}
+		
+		var maybeElem = document.getElementById(evidence + "-button-maybe");
+		if(maybeElem && game.standardEvidence[evidence] == "maybe"){
+			maybeElem.checked = true;
+			maybeElem.className = "btn btn-warning btn-sm active";
+		}
+		
+		var noElem = document.getElementById(evidence + "-button-no");
+		if(noElem && game.standardEvidence[evidence] == "no"){
+			noElem.checked = true;
+			noElem.className = "btn btn-danger btn-sm active";
+		}
 	}
 }
 
@@ -97,7 +109,7 @@ function calculateGhostProbabilities(){
 	
 	// calculate based on standard evidence
 	for(standardEvidence in game.standardEvidence){
-		if(game.standardEvidence[standardEvidence]){
+		if(game.standardEvidence[standardEvidence] == "yes"){
 			if(standardEvidence == "Ghost Orb" && game.gameSettings.piecesOfEvidence == 0){
 				// if a ghost orb was found on a zero evidence run, it has to be a mimic
 				for(ghost in game.ghosts){
@@ -109,6 +121,13 @@ function calculateGhostProbabilities(){
 			// this evidence was found, remove all ghosts that don't have it 
 			for(ghost in game.ghosts){
 				if(!config.ghostTypes[ghost].evidence.includes(standardEvidence)){
+					game.ghosts[ghost] = 0;
+				}
+			}
+		} else if(game.standardEvidence[standardEvidence] == "no"){
+			// this evidence was ruled out, remove all ghosts that have it
+			for(ghost in game.ghosts){
+				if(config.ghostTypes[ghost].evidence.includes(standardEvidence)){
 					game.ghosts[ghost] = 0;
 				}
 			}
@@ -137,10 +156,8 @@ function sortObjectByValues(obj) {
     return(sorted_obj)
 } 
 
-function setStandardEvidence(e){
-	var evidence = e.target.id;
-	game.standardEvidence[evidence] = e.target.checked;
-	
+function setStandardEvidence(evidence, value){
+	game.standardEvidence[evidence] = value;
+	refreshStandardEvidence(game.standardEvidence);
 	refreshPage();
-	return e;
 }
