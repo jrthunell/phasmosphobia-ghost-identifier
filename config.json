@@ -1,12 +1,185 @@
 {
-	"ghostTypes": [
-		"Spirit",
-		"Phantom",
+	"ghostTypes": {
+		"Banshee":{
+			"evidence": [
+				"Ghost Orb",
+				"Fingerprints",
+				"D.O.T.S"
+			]
+		},
+		"Demon":{
+			"evidence": [
+				"Freezing Temperatures",
+				"Fingerprints",
+				"Ghost Writing"
+			]
+		},
+		"Deogen":{
+			"evidence": [
+				"Spirit Box",
+				"Ghost Writing",
+				"D.O.T.S"
+			]
+		},
+		"Goryo":{
+			"evidence": [
+				"EMF 5",
+				"Fingerprints",
+				"D.O.T.S"
+			]
+		},
+		"Hantu":{
+			"evidence": [
+				"Ghost Orb",
+				"Freezing Temperatures",
+				"Fingerprints"
+			]
+		},
+		"Jinn":{
+			"evidence": [
+				"EMF 5",
+				"Freezing Temperatures",
+				"Fingerprints"
+			]
+		},
+		"Mare":{
+			"evidence": [
+				"Ghost Orb",
+				"Spirit Box",
+				"Ghost Writing"
+			]
+		},
+		"Moroi":{
+			"evidence": [
+				"Spirit Box",
+				"Freezing Temperatures",
+				"Ghost Writing"
+			]
+		},
+		"Myling":{
+			"evidence": [
+				"EMF 5",
+				"Fingerprints",
+				"Ghost Writing"
+			]
+		},
+		"Obake":{
+			"evidence": [
+				"EMF 5",
+				"Ghost Orb",
+				"Fingerprints"
+			]
+		},
+		"Oni":{
+			"evidence": [
+				"EMF 5",
+				"Freezing Temperatures",
+				"D.O.T.S"
+			]
+		},
+		"Onryo":{
+			"evidence": [
+				"Ghost Orb",
+				"Spirit Box",
+				"Freezing Temperatures"
+			]
+		},
+		"Phantom":{
+			"evidence": [
+				"Spirit Box",
+				"Fingerprints",
+				"D.O.T.S"
+			]
+		},
+		"Poltergeist":{
+			"evidence": [
+				"Spirit Box",
+				"Fingerprints",
+				"Ghost Writing"
+			]
+		},
+		"Raiju":{
+			"evidence": [
+				"EMF 5",
+				"Ghost Orb",
+				"D.O.T.S"
+			]
+		},
+		"Revenant":{
+			"evidence": [
+				"Ghost Orb",
+				"Freezing Temperatures",
+				"Ghost Writing"
+			]
+		},
+		"Shade":{
+			"evidence": [
+				"EMF 5",
+				"Freezing Temperatures",
+				"Ghost Writing"
+			]
+		},
+		"Spirit":{
+			"evidence": [
+				"EMF 5",
+				"Spirit Box",
+				"Ghost Writing"
+			]
+		},
+		"Thaye":{
+			"evidence": [
+				"Ghost Orb",
+				"Ghost Writing",
+				"D.O.T.S"
+			]
+		},
+		"The Mimic":{
+			"evidence": [
+				"Ghost Orb",
+				"Spirit Box",
+				"Freezing Temperatures",
+				"Fingerprints"
+			]
+		},
+		"The Twins":{
+			"evidence": [
+				"EMF 5",
+				"Spirit Box",
+				"Freezing Temperatures"
+			]
+		},
+		"Wraith":{
+			"evidence": [
+				"EMF 5",
+				"Spirit Box",
+				"D.O.T.S"
+			]
+		},
+		"Yokai":{
+			"evidence": [
+				"Ghost Orb",
+				"Spirit Box",
+				"D.O.T.S"
+			]
+		},
+		"Yurei":{
+			"evidence": [
+				"Ghost Orb",
+				"Freezing Temperatures",
+				"D.O.T.S"
+			]
+		}
+	},
+	"standardEvidence": [
+		"EMF 5",
+		"Ghost Orb",
+		"Spirit Box",
+		"Freezing Temperatures",
+		"Fingerprints",
+		"Ghost Writing",
+		"D.O.T.S"
 	],
-	"gameSettings": {
-		"piecesOfEvidence": 3
-	}
-	"evidence": {
+	"otherEvidence": {
 		"Ghost Events": [
 			{
 				"name": "Smoke Ball",
@@ -56,7 +229,7 @@
 					"Shade": 30
 				}
 			}
-		]
+		],
 		"Salt": [
 			{
 				"name": "Steps in Salt",
