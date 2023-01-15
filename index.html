@@ -10,7 +10,7 @@
 	<div class="container">
 		<h1 class="text-center" style="margin-bottom:70px">Phasmophobia Ghost Identifier</h1>
 		<div class="row">
-			<div class="offset-sm-3 col-sm-6">
+			<div class="offset-lg-3 col-lg-6">
 				<div class="card text-white bg-secondary mb-3 ">
 					<div class="card-header">Game Settings</div>
 					<div class="card-body" id="settings-template">
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-8">			
+			<div class="col-lg-8">			
 				<div id="evidence-list" class="card text-white bg-secondary mb-3 ">
 					<div class="card-header">Standard Evidence</div>
 					<div class="card-body" id="settings-template">
@@ -76,10 +76,27 @@
 							<p style="margin:5px 0 0 10px">$name</p>
 						</div>
 					</div>
+					<div class="card-text" id="counter-evidence-template">
+						<div class="row">
+							<div class="form-group" style="margin:0">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" role="button" onclick="decrementCounter('$group','$name')">-</span>
+									</div>
+									<input type="text" id="$group-$name-counter" disabled class="form-control" style="width:50px">
+									<div class="input-group-append">
+										<span class="input-group-text" role="button" onclick="incrementCounter('$group','$name')">+</span>
+									</div>
+								</div>
+							</div>
+							<p style="margin:5px 0 0 10px">$name</p>
+						</div>
+					</div>
 				</div>
+				
 			</div>
 			
-			<div id="ghost-list" class="col-sm-4">
+			<div id="ghost-list" class="col-lg-4">
 				<table class="table table-hover">
 					<thead class="table-primary">
 					<tr>

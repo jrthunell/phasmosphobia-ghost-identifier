@@ -187,15 +187,15 @@
 				"probabilities": {
 					"Oni": 0,
 					"Shade": 60,
-					"others": 30
+					"others": 50
 				}
 			},
 			{
 				"name": "Full Manifestation, no singing",
 				"type": "counter",
 				"probabilities": {
-					"Shade": 30,
-					"others": 40
+					"Shade": 40,
+					"others": 50
 				}
 			},
 			{
@@ -203,7 +203,7 @@
 				"type": "counter",
 				"probabilities": {
 					"Banshee": 60,
-					"others": 30
+					"others": 50
 				}
 			},
 			{
@@ -232,7 +232,7 @@
 				"name": "Interactions with player in the room",
 				"type": "counter",
 				"probabilities": {
-					"Shade": 30,
+					"Shade": 10,
 					"others": 70
 				}
 			}

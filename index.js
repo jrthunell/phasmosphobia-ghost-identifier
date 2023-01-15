@@ -174,6 +174,7 @@ function calculateBooleanEvidenceProbabilities(group, name){
 			game.ghosts[ghost] = (evidenceConfig.trueProbabilities[ghost] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
 		}
 		for(ghost in game.ghosts){
+			if(evidenceConfig[ghost].trueProbabilities) continue;
 			// use the "others" field for all other ghosts
 			game.ghosts[ghost] = (evidenceConfig.trueProbabilities["others"] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
 		}
@@ -185,6 +186,7 @@ function calculateBooleanEvidenceProbabilities(group, name){
 			game.ghosts[ghost] = (evidenceConfig.falseProbabilities[ghost] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
 		}
 		for(ghost in game.ghosts){
+			if(evidenceConfig.falseProbabilities[ghost]) continue;
 			// use the "others" field for all other ghosts
 			game.ghosts[ghost] = (evidenceConfig.falseProbabilities["others"] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
 		}
@@ -192,7 +194,34 @@ function calculateBooleanEvidenceProbabilities(group, name){
 }
 
 function calculateCounterEvidenceProbabilities(group, name){
-	alert("not implemented");
+	var evidenceConfig = config.otherEvidence[group].filter(x => x.name == name)[0]
+	var gameEvidence = game.otherEvidence[group][name];
+	
+	var totalGhostProbabilityScores = Object.values(game.ghosts).reduce((acc, x)=>acc+x, 0);
+	for(var i = 0; i < gameEvidence.count; i++){
+		var numGhosts = Object.keys(game.ghosts).length; // 24
+		var probabilityOfEvent = (numGhosts - Object.keys(evidenceConfig.probabilities).length + 1) * evidenceConfig.probabilities['others']; 
+		for(ghost in evidenceConfig.probabilities){
+			if(ghost == "others") continue;
+			probabilityOfEvent += evidenceConfig.probabilities[ghost];
+		}
+		probabilityOfEvent /= numGhosts;
+		probabilityOfEvent /= 100; // 0.4875
+		
+		for(ghost in evidenceConfig.probabilities){
+			if(ghost == "others")
+				continue;
+			// if there is a probability defined for this ghost, update accordingly
+			// 0.2 * 1 / .4875
+			game.ghosts[ghost] = (evidenceConfig.probabilities[ghost] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) / probabilityOfEvent * 100;
+		}
+		for(ghost in game.ghosts){
+			if(evidenceConfig.probabilities[ghost]) 
+				continue;
+			// use the "others" field for all other ghosts
+			game.ghosts[ghost] = (evidenceConfig.probabilities["others"] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) / probabilityOfEvent * 100;
+		}
+	}		
 }
 
 function sortObjectByValues(obj) {
@@ -234,11 +263,11 @@ function loadOtherEvidence(){
 					};
 					break;
 				case "counter":
-					//game.otherEvidence[group][evidence.name] = {
-					//	name: evidence.name,
-					//	type: evidence.type,
-					//	count: 0
-					//};
+					game.otherEvidence[group][evidence.name] = {
+						name: evidence.name,
+						type: evidence.type,
+						count: 0
+					};
 					break;
 				default:
 					console.log("unrecognized evidence type: " + evidence.type);
@@ -257,6 +286,7 @@ function refreshOtherEvidence(){
 	evidenceCardsWrapper.innerHTML = evidenceCardsHTML;
 	
 	refreshBooleanEvidenceHTML();
+	refreshCounterEvidenceHTML();
 }
 
 function createEvidenceGroupHTML(group){
@@ -290,6 +320,7 @@ function refreshBooleanEvidenceHTML(){
 	for(group in game.otherEvidence){
 		for(name in game.otherEvidence[group]){
 			var evidence = game.otherEvidence[group][name];
+			if(evidence.type != "boolean") continue;
 			var yesElem = document.getElementById(group + "-" + evidence.name + "-button-yes");
 			if(yesElem && game.otherEvidence[group][name].state == "yes"){
 				yesElem.checked = true;
@@ -311,6 +342,17 @@ function refreshBooleanEvidenceHTML(){
 	}
 }
 
+function refreshCounterEvidenceHTML(){
+	for(group in game.otherEvidence){
+		for(name in game.otherEvidence[group]){
+			var evidence = game.otherEvidence[group][name];
+			if(evidence.type != "counter") continue;
+			var counterElem = document.getElementById(group + "-" + name + "-counter");
+			counterElem.value = evidence.count;
+		}
+	}
+}
+
 function setBooleanEvidence(state, group, name){
 	game.otherEvidence[group][name].state = state;
 	refreshOtherEvidence();
@@ -318,5 +360,22 @@ function setBooleanEvidence(state, group, name){
 }
 
 function createCounterEvidenceHTML(group, evidence){
-	return evidence.name + "<br>";	
+	var template = document.getElementById("counter-evidence-template").innerHTML;
+	return template
+		.replaceAll("$group", group)
+		.replaceAll("$name", evidence.name)
+		.replaceAll("$callbackFnArgs", "'" + group + "','" + evidence.name + "'")
+}
+
+function decrementCounter(group, name){
+	if(game.otherEvidence[group][name].count > 0)
+		game.otherEvidence[group][name].count--;
+	refreshOtherEvidence();
+	refreshPage();
+}
+
+function incrementCounter(group, name){
+	game.otherEvidence[group][name].count++;
+	refreshOtherEvidence();
+	refreshPage();
 }
