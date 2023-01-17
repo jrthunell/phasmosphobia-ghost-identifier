@@ -227,6 +227,20 @@
 				}
 			}
 		],
+		"Ghost Hunts": {
+			{
+				"name": "Quiet footsteps during hunt",
+				"type": "boolean",
+				"trueProbabilities": {
+					"Myling": 90,
+					"others": 10
+				},
+				"falseProbabilities": {
+					"Myling": 10,
+					"others": 90
+				}
+			}
+		}
 		"Interactions": [
 			{
 				"name": "Interactions with player in the room",
