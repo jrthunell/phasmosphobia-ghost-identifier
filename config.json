@@ -247,6 +247,18 @@
 					"Thaye": 90,
 					"others": 70
 				}
+			},
+			{
+				"name": "Turns lights on",
+				"type": "boolean",
+				"trueProbabilities": {
+					"Mare": 0,
+					"others": 70
+				},
+				"falseProbabilities": {
+					"Mare": 90,
+					"others": 50
+				}
 			}
 		],
 		"Parabolic Microphone": [
