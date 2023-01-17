@@ -227,7 +227,7 @@
 				}
 			}
 		],
-		"Ghost Hunts": {
+		"Ghost Hunts": [
 			{
 				"name": "Quiet footsteps during hunt",
 				"type": "boolean",
@@ -240,7 +240,7 @@
 					"others": 90
 				}
 			}
-		}
+		]
 		"Interactions": [
 			{
 				"name": "Interactions with player in the room",
