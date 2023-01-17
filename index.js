@@ -174,7 +174,7 @@ function calculateBooleanEvidenceProbabilities(group, name){
 			game.ghosts[ghost] = (evidenceConfig.trueProbabilities[ghost] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
 		}
 		for(ghost in game.ghosts){
-			if(evidenceConfig[ghost].trueProbabilities) continue;
+			if(evidenceConfig[ghost] && evidenceConfig[ghost].trueProbabilities) continue;
 			// use the "others" field for all other ghosts
 			game.ghosts[ghost] = (evidenceConfig.trueProbabilities["others"] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
 		}
@@ -186,7 +186,7 @@ function calculateBooleanEvidenceProbabilities(group, name){
 			game.ghosts[ghost] = (evidenceConfig.falseProbabilities[ghost] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
 		}
 		for(ghost in game.ghosts){
-			if(evidenceConfig.falseProbabilities[ghost]) continue;
+			if(evidenceConfig[ghost] && evidenceConfig.falseProbabilities[ghost]) continue;
 			// use the "others" field for all other ghosts
 			game.ghosts[ghost] = (evidenceConfig.falseProbabilities["others"] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) * 100;
 		}
@@ -216,7 +216,7 @@ function calculateCounterEvidenceProbabilities(group, name){
 			game.ghosts[ghost] = (evidenceConfig.probabilities[ghost] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) / probabilityOfEvent * 100;
 		}
 		for(ghost in game.ghosts){
-			if(evidenceConfig.probabilities[ghost]) 
+			if(evidenceConfig[ghost] && evidenceConfig.probabilities[ghost]) 
 				continue;
 			// use the "others" field for all other ghosts
 			game.ghosts[ghost] = (evidenceConfig.probabilities["others"] / 100) * (game.ghosts[ghost] / totalGhostProbabilityScores) / probabilityOfEvent * 100;
