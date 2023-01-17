@@ -235,6 +235,28 @@
 					"Shade": 10,
 					"others": 70
 				}
+			},
+			{
+				"name": "Turns off breaker",
+				"type": "boolean",
+				"trueProbabilities": {
+					"Jinn": 10,
+					"others": 70
+				},
+				"falseProbabilities": {
+					"Thaye": 90,
+					"others": 70
+				}
+			}
+		],
+		"Parabolic Microphone": [
+			{
+				"name": "Whisper",
+				"type": "counter",
+				"probabilities": {
+					"Banshee": 75,
+					"others": 100
+				}
 			}
 		],
 		"Salt": [
