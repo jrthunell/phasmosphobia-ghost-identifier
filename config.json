@@ -327,6 +327,20 @@
 				}
 			}
 		],
+		"D.O.T.S": [
+			{
+				"name": "DOTS visible in person (not on camera)",
+				"type": "boolean",
+				"trueProbabilities": {
+					"Goryo": 10,
+					"others": 100
+				},
+				"falseProbabilities": {
+					"Goryo": 100,
+					"others": 100
+				}
+			}
+		],
 		"Ghost Room": [
 			{
 				"name": "Ghost changes favorite room",
